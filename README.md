@@ -54,6 +54,7 @@ chmod 755 symfony-git.sh
 Basically this script automatically does all steps defined on the symfony documentation:
 
 http://symfony.com/doc/current/book/installation.html
+
 http://symfony.com/doc/current/cookbook/workflow/new_project_git.html
 
 At the end, you will have a new Symfony installation ready to be used on a new project and save your changes on git.
