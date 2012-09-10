@@ -124,7 +124,11 @@ echo -e ${GreenF}"Creating vendor folder and installing all Symfony 2.1 dependen
 php composer.phar install
 
 echo -e ${GreenF}"Installing FOSUser bundle ==> https://github.com/FriendsOfSymfony/FOSUserBundle/"${Reset};
+echo -e ${GreenF}"Installing DoctrineFixturesBundle ==> https://github.com/doctrine/DoctrineFixturesBundle/"${Reset};
+echo -e ${GreenF}"Installing DoctrineMigrationsBundle ==> https://github.com/doctrine/DoctrineMigrationsBundle"${Reset};
 php composer.phar require  friendsofsymfony/user-bundle:*
+php composer.phar require  doctrine/doctrine-fixtures-bundle:dev-master
+php composer.phar require  doctrine/doctrine-migrations-bundle:dev-master
 
 echo -e ${GreenF}"Second commit to add php.phar and update composer files"${Reset};
 git add .
