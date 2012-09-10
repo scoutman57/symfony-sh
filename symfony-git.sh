@@ -3,10 +3,22 @@
 #-------------------------------------------------------
 #!/bin/sh
 
+#------------------------------------------------------------
 # Please modify this vars to match your desired configuration
+#------------------------------------------------------------
+
+# Path where this script is going to run and where symfony/ folder will be installed
+root_path="/var/www/github/symfony-sh" 
+
+# Symfony 2.1 without vendors download link 
 symfony_url="http://symfony.com/download?v=Symfony_Standard_2.1.0.tgz"
-webserver_user="daemon" #www-data, apache, anonymous
-server="macosx" # macosx, linux
+
+# Webserver user, usually www-data (other usual users: daemon, apache, anonymous)
+webserver_user="daemon"
+
+# OS where this script will run. Options: macosx or linux 
+# It is used for the cache/ logs/ permission strategy
+server="macosx"
 
 #----------------------------------------------------------------------
 # Requirements 
@@ -126,20 +138,20 @@ echo -e ${GreenF}"---------------------------------------------------------"${Re
 
 echo -e ${GreenF}"Please Create an alias.localhost (replace alias for another name that suits your needs) in /etc/hosts"${Reset};
 echo -e ${GreenF}"Then, create a virtual host in Apache to access your local installation from browser"${Reset};
-echo -e ${GreenF}"This is a vhost sample (please change to suite your SPECIFIC paths and names):"${Reset};
+echo -e ${GreenF}"This is a vhost sample (please change to suit your SPECIFIC paths and names):"${Reset};
 echo "
 <VirtualHost *:80>
-    DocumentRoot "/path-where-you-put-this-script/symfony/web"
+    DocumentRoot "$root_path/symfony/web"
     ServerName alias.localhost
     DirectoryIndex app.php
-    <Directory "/path-where-you-put-this-script/symfony/web">
+    <Directory "$root_path/symfony/web">
         Options Indexes FollowSymlinks
         AllowOverride All
         Order allow,deny
         Allow from all
     </Directory>
-    ErrorLog "path-to-error.-log/error_log"
-    CustomLog "path-to-access-log/access_log" common
+    ErrorLog "logs/error_log"
+    CustomLog "logs/access_log" common
 </VirtualHost>
 "
 echo -e ${GreenF}"Don't forget to run app/check.php inside Symfony folder for aditional requirements"${Reset};
