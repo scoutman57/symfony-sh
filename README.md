@@ -6,7 +6,7 @@ Several Bash scripts to be used with Symfony 2.1
 symfony-git.sh
 ---------------
 
-This script installs Symfony 2.1 with git support and favorite compatible bundles.
+This script installs Symfony 2.1.1 with git support and favorite compatible bundles.
 
 In order to use this script follow this steps:
 

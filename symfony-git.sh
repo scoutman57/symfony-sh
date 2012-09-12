@@ -11,7 +11,7 @@
 root_path="/var/www/github/symfony-sh" 
 
 # Symfony 2.1 without vendors download link 
-symfony_url="http://symfony.com/download?v=Symfony_Standard_2.1.0.tgz"
+symfony_url="http://symfony.com/download?v=Symfony_Standard_2.1.1.tgz"
 
 # Webserver user, usually www-data (other usual users: daemon, apache, anonymous)
 webserver_user="daemon"
