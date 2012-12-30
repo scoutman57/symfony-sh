@@ -11,7 +11,7 @@
 root_path="/var/www/github/symfony-sh" 
 
 # Symfony 2.1 without vendors download link 
-symfony_url="http://symfony.com/download?v=Symfony_Standard_2.1.1.tgz"
+symfony_url="http://symfony.com/download?v=Symfony_Standard_2.1.6.tgz"
 
 # Webserver user, usually www-data (other usual users: daemon, apache, anonymous)
 webserver_user="daemon"
@@ -123,12 +123,24 @@ fi
 echo -e ${GreenF}"Creating vendor folder and installing all Symfony 2.1 dependencies"${Reset};
 php composer.phar install
 
-echo -e ${GreenF}"Installing FOSUser bundle ==> https://github.com/FriendsOfSymfony/FOSUserBundle/"${Reset};
-echo -e ${GreenF}"Installing DoctrineFixturesBundle ==> https://github.com/doctrine/DoctrineFixturesBundle/"${Reset};
-echo -e ${GreenF}"Installing DoctrineMigrationsBundle ==> https://github.com/doctrine/DoctrineMigrationsBundle"${Reset};
-php composer.phar require  friendsofsymfony/user-bundle:*
-php composer.phar require  doctrine/doctrine-fixtures-bundle:dev-master
-php composer.phar require  doctrine/doctrine-migrations-bundle:dev-master
+echo -e ${GreenF}"Installing Third party bundles."${Reset};
+#sed '3i\ '$'\n\    "minimum-stability": "dev",\n' composer.json > composerTemp.json
+#rm -rf composer.json
+#mv composerTemp.json composer.json
+php composer.phar require \
+doctrine/data-fixtures:dev-master \
+doctrine/migrations:dev-master \
+doctrine/doctrine-fixtures-bundle:dev-master \
+doctrine/doctrine-migrations-bundle:dev-master \
+craue/formflow-bundle:dev-master \
+friendsofsymfony/user-bundle:* \
+knplabs/knp-menu:dev-master \
+knplabs/knp-menu-bundle:dev-master \
+braincrafted/bootstrap-bundle:dev-master \
+raulfraile/ladybug-bundle:dev-master \
+pagerfanta/pagerfanta:dev-master \
+white-october/pagerfanta-bundle:dev-master \
+stof/doctrine-extensions-bundle:dev-master 
 
 echo -e ${GreenF}"Second commit to add php.phar and update composer files"${Reset};
 git add .
@@ -157,6 +169,26 @@ echo "
     ErrorLog "logs/error_log"
     CustomLog "logs/access_log" common
 </VirtualHost>
+
+Enable also this bundles on app/AppKernel.php:
+
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+        new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+        new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+        new FOS\UserBundle\FOSUserBundle(),
+        new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
+        new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+        new Braincrafted\BootstrapBundle\BraincraftedBootstrapBundle(),
+        new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+        new Craue\FormFlowBundle\CraueFormFlowBundle(),
+    );
+    // ...
+}
+
 "
 echo -e ${GreenF}"Don't forget to run app/check.php inside Symfony folder for aditional requirements"${Reset};
 echo -e ${GreenF}"If you think your php installation has all requirements, go with your browser to http://alias.localhost/app_dev.php to see the Acme Demo"${Reset};
